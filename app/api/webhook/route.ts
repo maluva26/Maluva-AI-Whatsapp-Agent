@@ -1,10 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { waitUntil } from "@vercel/functions";
 
 import { serverEnv } from "@/lib/env";
 import { processWhatsAppWebhook } from "@/lib/webhook";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 export async function GET(request: NextRequest) {
   const params = request.nextUrl.searchParams;
@@ -31,9 +33,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ received: true });
   }
 
-  void processWhatsAppWebhook(payload as never).catch((error) => {
+  const processing = processWhatsAppWebhook(payload as never).catch((error) => {
     console.error("Webhook processing failed", error);
   });
 
+  waitUntil(processing);
   return NextResponse.json({ received: true });
 }

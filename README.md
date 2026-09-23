@@ -55,6 +55,7 @@ https://YOUR_TUNNEL.ngrok-free.app/api/webhook
 - Keep `.env.local` out of git. Use platform environment variables in production.
 - `SUPABASE_SERVICE_ROLE_KEY` is server-only and must never be exposed to browser code.
 - `WHATSAPP_ACCESS_TOKEN` should be a permanent Meta System User token with WhatsApp permissions.
-- Webhook POST returns `200` immediately and processes work asynchronously to avoid Meta retries.
+- Webhook POST returns `200` immediately, but uses Vercel `waitUntil()` so the async reply work continues reliably after the response.
+- The webhook route sets `maxDuration = 60`; keep Fluid Compute enabled or set a compatible function duration in Vercel if AI replies take longer.
 - The database enforces duplicate webhook protection with a unique `whatsapp_msg_id`.
 - `WHATSAPP_GRAPH_VERSION` defaults to `v26.0` and can be changed without code edits.
