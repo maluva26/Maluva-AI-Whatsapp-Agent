@@ -21,7 +21,7 @@ export const serverEnv = {
     getEnv("ADMIN_WHATSAPP_WA_ID", "263789733173").replace(/[^\d]/g, ""),
   openRouterApiKey: () => getEnv("OPENROUTER_API_KEY"),
   openRouterModel: () =>
-    getEnv("OPENROUTER_MODEL", "inclusionai/ling-3.0-flash-vl:free"),
+    getEnv("OPENROUTER_MODEL", "nex-agi/nex-n2.5-mini:free"),
   openRouterSiteUrl: () => getEnv("OPENROUTER_SITE_URL", "http://localhost:3000"),
   openRouterAppName: () => getEnv("OPENROUTER_APP_NAME", "WhatsApp AI Agent"),
   aiSystemPrompt: () => getEnv("AI_SYSTEM_PROMPT", DEFAULT_PROMPT)
